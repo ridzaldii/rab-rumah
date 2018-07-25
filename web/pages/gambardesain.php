@@ -128,11 +128,17 @@
         <div class="page-wrapper">
             <div class="row page-titles">
                 <div class="col-md-5 align-self-center">
-                    <h3 class="text-primary">Tambah Desain</h3> </div>
+                    <h3 class="text-primary">Gambar-gambar Desain <?php 
+                        $query_d = "SELECT * FROM desain WHERE id=".$_GET['id'];
+                          $result_d = $conn->query($query_d);
+
+                          while ($row_d = $result_d->fetch_assoc()) {                          
+                     ?></h3> </div>
                 <div class="col-md-7 align-self-center">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="javascript:void(0)">Desain</a></li>
-                        <li class="breadcrumb-item active">Tambah Desain</li>
+                        <li class="breadcrumb-item"><a href="detaildesain.php?id=<?php echo $row_d['id'] ?>"><?php echo $row_d['namadesain']; ?></a></li>
+                        <li class="breadcrumb-item active">Gambar-gambar Desain</li>
                     </ol>
                 </div>
             </div>
@@ -141,50 +147,108 @@
             <div class="container-fluid">
                 <!-- Start Page Content -->
                 <div class="row">
-                    <div class="col-lg-6">
-                        <div class="card">
-                            <div class="card-title">
-                                <h4>Masukkan Data Desain Rumah</h4>
-                            </div>
-                            <div class="card-body">
-                                <div class="basic-form">
-                                    <form action="../proses/crud_desain.php" method="post" enctype="multipart/form-data">
+                    <div class="col-lg-4">
+                        <button class="btn btn-success" data-toggle="dropdown"><i class="fa fa-plus"></i> Tambah Gambar</button>
+                        <!-- toggle -->
+                        <div class="dropdown-menu animated zoomIn col-12" style="padding:20px;">
+                            <ul class="mega-dropdown-menu row">
+                                <li class="col-md-12">
+                                    <h4 class="m-b-20">Masukkan Gambar Baru</h4>
+                                    <form action="../proses/crud_gambar.php" method="post" enctype="multipart/form-data">
                                         <div class="form-group">
-                                            <input type="text" name="namadesain" class="form-control input-default " placeholder="Nama Desain">
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="text" name="deskripsi" class="form-control input-default " placeholder="Deskripsi">
-                                        </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="card">
-                            <div class="card-title">
-                                <h4>Masukkan Gambar Desain Rumah</h4>
-                            </div>
-                            <div class="card-body">
-                                <div class="basic-form">
-                                    <div class="form-group">
-                                        <div class="input-group">
-                                            <span class="input-group-btn">
-                                                <span class="btn btn-default btn-file">
-                                                    Browse… <input type="file" id="imgInp" name="gambar">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <span class="btn btn-default btn-file">
+                                                        Browse… <input type="file" id="imgInp" name="gambar">
+                                                    </span>
                                                 </span>
-                                            </span>
-                                            <input type="text" class="form-control" readonly>
+                                                <input type="text" class="form-control" readonly>
+                                            </div>
+                                            <div class="form-group" style="margin-top:15px">
+                                                <label>Nama Ruangan</label>
+                                                <input type="hidden" name="iddesain" value="<?php echo $_GET['id'] ?>">
+                                                <input type="text" name="namaruangan" class="form-control input-default " placeholder="Nama Ruangan">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="">Deskripsi</label>
+                                                <textarea placeholder="Deskirpsi Ruangan" style="resize:vertical; min-height:100px" type="text" name="deskripsi" class="form-control"></textarea>
+                                            </div>
                                         </div>
-                                        <img id='img-upload'/>
-                                    </div>
-                                    <button type='submit' name='submit' class='btn btn-success' value='Submit' style="float:right"/><i class='fa fa-check'></i> Submit</button>
+                                        <button type='submit' name='tambahgambar' class='btn btn-success' value='Submit' style="float:right"/><i class='fa fa-check'></i> Submit</button>
                                     </form>
-                                </div>
-                                        
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- end toggle -->
+                    </div>
+                </div>
+                <div class="row">
+                <?php 
+                    $query_g = "SELECT * FROM gambar WHERE id_desain=".$_GET['id'];
+                    $result_g = $conn->query($query_g);
+
+                    if ($result_g->num_rows==0) {
+                        ?>
+                        <div class="col-lg-4 col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <img style="height: 200px; width:100%" src="../images/no-image-avail.png" alt="Gambar tidak tersedia">
                                 </div>
                             </div>
                         </div>
-                </div>
+                        <?php
+                    }
+
+                    while ($row_g = $result_g->fetch_assoc()) { 
+                        ?>
+                        <div class="col-lg-4 col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <a href="#" data-toggle="dropdown"><img style="height: 200px; width:100%" src="../images/upload/<?php echo $row_g['gambar'] ?>" alt="<?php echo $row_g['gambar'] ?>"></a>
+                                    <h4 style="text-align:center"><?php echo $row_g['namaruangan'] ?></h4>
+                                    <!-- toggle -->
+                                    <div class="dropdown-menu animated zoomIn col-12" style="padding:10px;">
+                                        <ul class="mega-dropdown-menu row">
+                                            <li class="col-md-12">
+                                                <h4 class="m-b-20">Detail Gambar</h4>
+                                                <form action="../proses/crud_gambar.php" method="post" enctype="multipart/form-data">
+                                                    <div class="form-group">
+                                                        <div class="input-group">
+                                                            <span class="input-group-btn">
+                                                                <span class="btn btn-default btn-file">
+                                                                    Browse… <input type="file" id="imgInp" name="gambar" value="<?php echo $row_g['gambar'] ?>">
+                                                                </span>
+                                                            </span>
+                                                            <input type="text" class="form-control" value="<?php echo $row_g['gambar'] ?>" readonly>
+                                                        </div>
+                                                        <div class="form-group" style="margin-top:15px">
+                                                            <label>Nama Ruangan</label>
+                                                            <input type="text" name="namaruangan" class="form-control input-default " value="<?php echo $row_g['namaruangan'] ?>" placeholder="Nama Ruangan">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="">Deskripsi</label>
+                                                            <textarea placeholder="Deskirpsi Ruangan" style="resize:vertical; min-height:100px" type="text" name="deskripsi" class="form-control"><?php echo $row_g['deskripsi'] ?></textarea>
+                                                        </div>
+                                                        <img id='img-upload'/>
+                                                    </div>
+                                                    <input type="hidden" name="id" value="<?php echo $row_g['id'] ?>">
+                                                    <input type="hidden" name="iddesain" value="<?php echo $_GET['id'] ?>">
+                                                    <button type='submit' name='updatedetail' class='btn btn-success' value='Submit' style="float:right"/><i class='fa fa-pencil'></i> Update</button>
+                                                </form>
+                                                    <a href="../proses/crud_gambar.php?hapusg=<?php echo $row_g['id'] ?>&idd=<?php echo $_GET['id'] ?>"><button onclick="return confirm('Yakin ingin menghapus gambar tersebut?')" name='hapusgambar' class='btn btn-danger' value='Submit' style="float:left"/><i class='fa fa-trash'></i> Hapus</button></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <!-- end toggle -->
+                                </div>
+                            </div>
+                        </div>
+                        <?php
+                    }          
+                 ?>
+                 </div>
+            </div>
+            <?php } ?>
             <!-- footer -->
             <footer class="footer"> © 2018 All rights reserved. Template designed by <a href="https://colorlib.com">Colorlib</a></footer>
             <!-- End footer -->

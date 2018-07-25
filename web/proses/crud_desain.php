@@ -34,7 +34,7 @@
 		if ($result) {
 			echo "<script>
 						alert('Berhasil dihapus');
-						window.location='".$link."/index.php';
+						window.location='".$link."/detaildesain.php?id=$hapus';
 						</script>";
 			$conn->query($set1);
 		}else{
@@ -42,7 +42,7 @@
 			echo "error";
 			$conn->query($set1);
 		}
-	} elseif (isset($_POST['update'])) {
+	} elseif (isset($_POST['updatedata'])) {
 		$id = $_POST['id'];
 		$namadesain = $_POST['namadesain'];
 		$deskripsi = $_POST['deskripsi'];
@@ -53,7 +53,7 @@
 		if ($result) {
 			echo "<script>
 						alert('Berhasil Diperbaharui.');
-						window.location='".$link."/index.php';
+						window.location='".$link."/pages/detaildesain.php?id=$id';
 						</script>";
 		}else{
 			echo $conn->error;
@@ -61,5 +61,26 @@
 		}
 
 		
-	}
+	} elseif (isset($_POST['updategambar'])) {
+		$id = $_POST['id'];
+		$file		= time()."-".$_FILES['gambar']['name'];
+		$filetmp 		= $_FILES['gambar']['tmp_name'];
+
+		if(move_uploaded_file($filetmp, '../images/upload/'.$file)){
+			$query 		= "UPDATE desain SET gambar='$file' WHERE id=$id";
+
+			$result 	= $conn->query($query);
+			if ($result) {
+				echo "<script>
+							alert('Berhasil');
+							window.location='".$link."/pages/detaildesain.php?id=$id';
+							</script>";
+			}else{
+				echo $conn->error;
+				echo "error";
+			}
+		} else{
+			echo "erroraaa";
+		}
+	} 
  ?>

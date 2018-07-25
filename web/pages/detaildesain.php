@@ -148,6 +148,63 @@
             <div class="container-fluid">
                 <!-- Start Page Content -->
                 <div class="row">
+                    <div class="col-6">
+                        <div class="card">
+                            <h4 class="card-title">Gambar Sampul Desain</h4>
+                            <div class="card-body">
+                                <img src="../images/upload/<?php echo $row_d['gambar'] ?>" width="100%" alt="<?php echo $row_d['gambar'] ?>">
+                                <button data-toggle="dropdown" class="btn btn-info" style="margin:10px 0 0 0; float:right">Ganti Sampul</button>
+                                <!-- toggle -->
+                                <div class="dropdown-menu animated zoomIn col-12" style="padding:10px;">
+                                    <ul class="mega-dropdown-menu row">
+                                        <li class="col-md-12">
+                                            <h4 class="m-b-20">Masukkan Gambar Baru</h4>
+                                            <form action="../proses/crud_desain.php" method="post" enctype="multipart/form-data">
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                        <span class="input-group-btn">
+                                                            <span class="btn btn-default btn-file">
+                                                                Browse… <input type="file" id="imgInp" name="gambar">
+                                                            </span>
+                                                        </span>
+                                                        <input type="text" class="form-control" readonly>
+                                                    </div>
+                                                    <img id='img-upload'/>
+                                                </div>
+                                                <input type="hidden" name="id" value="<?php echo $row_d['id'] ?>">
+                                                <button type='submit' name='updategambar' class='btn btn-success' value='Submit' style="float:right"/><i class='fa fa-check'></i> Submit</button>
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <!-- end toggle -->
+                                <a href="gambardesain.php?id=<?php echo $row_d['id'] ?> "><button class="btn-rounded btn-warning" style="margin:10px 0 0 0; float:left">Lihat Semua Gambar</button></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="card">
+                            <h4 class="card-title">Detail Desain</h4>
+                            <div class="card-body">
+                                <div class="basic-form">
+                                    <form action="../proses/crud_desain.php" method="post" enctype="multipart/form-data">
+                                        <div class="form-group">
+                                            <label>Nama Desain</label>
+                                            <input type="hidden" name="id" value="<?php echo $row_d['id'] ?>">
+                                            <input type="text" name="namadesain" class="form-control input-default " placeholder="Nama Desain"  value="<?php echo $row_d['namadesain'] ?>">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">Deskripsi</label>
+                                            <textarea style="resize:vertical; min-height:100px" type="text" name="deskripsi" class="form-control"><?php echo $row_d['deskripsi'] ?></textarea>
+                                            <button type="submit" name="updatedata" onclick="return confirm('Update Data?')" class="btn btn-info" style="margin:10px 0 0 0; float:right">Update Data</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
@@ -310,6 +367,43 @@
     <script src="../js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
     <script src="../js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script>
     <script src="../js/lib/datatables/datatables-init.js"></script>
+    <script>
+    $(document).ready( function() {
+        $(document).on('change', '.btn-file :file', function() {
+        var input = $(this),
+            label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+        input.trigger('fileselect', [label]);
+        });
+
+        $('.btn-file :file').on('fileselect', function(event, label) {
+            
+            var input = $(this).parents('.input-group').find(':text'),
+                log = label;
+            
+            if( input.length ) {
+                input.val(log);
+            } else {
+                if( log ) alert(log);
+            }
+        
+        });
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                
+                reader.onload = function (e) {
+                    $('#img-upload').attr('src', e.target.result);
+                }
+                
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#imgInp").change(function(){
+            readURL(this);
+        });     
+    });
+    </script>
 </body>
 
 </html>

@@ -1347,7 +1347,7 @@ ul.list-style-none li a:hover {
   background: url("../../assets/images/custom-select.png") right 0.75rem center no-repeat;
 }
 textarea {
-  resize: none;
+  resize: both;
 }
 .mailbox ul li .drop-title {
   font-weight: 500;

@@ -46,13 +46,29 @@ class JsonDisplayMarker {
                             'uraian'=>$response2)
                     );
                 }
+                $response3 = array();
+                $queryMarker3 = "SELECT * FROM gambar WHERE id_desain=".$data['id'];
+                $getData3 = $conn->prepare($queryMarker3);
+                $getData3->execute();
+                $result3 = $getData3->fetchAll(PDO::FETCH_ASSOC);
+                foreach ($result3 as $data3) {
+                    array_push($response3,
+                            array(
+                                'id_gambar'=>$data3['id'],
+                                'id_desain'=>$data3['id_desain'],
+                                'namaruangan'=>$data3['namaruangan'],
+                                'gambar'=>$link.'images/upload/'.$data3['gambar'],
+                                'deskripsi'=>$data3['deskripsi'])
+                        );
+                }
                 array_push($response,
                     array(
                         'id_desain'=>$data['id'],
                         'namadesain'=>$data['namadesain'],
                         'deskripsi'=>$data['deskripsi'],
                         'uraian_pekerjaan'=>$response1,
-                        'gambar'=>$link.'images/Desain/'.$data['gambar'])
+                        'gambar'=>$link.'images/upload/'.$data['gambar'],
+                        'listgambar'=>$response3)
                     );
             }
         }catch (PDOException $e){
