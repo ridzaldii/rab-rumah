@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 20, 2018 at 02:31 PM
+-- Generation Time: Jul 25, 2018 at 11:05 AM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 7.2.1
 
@@ -60,9 +60,9 @@ CREATE TABLE `desain` (
 --
 
 INSERT INTO `desain` (`id`, `namadesain`, `deskripsi`, `gambar`) VALUES
-(1, 'Rumah Tinggal A', 'Rumah minimalis sederhana dengan tipe-36 dengan 2 kamar tidur yang akan dibangun memiliki ukuran panjang 6 meter, lebar 6 meter dan tinggi umumnya sekitar 4 meter. Rincian biaya dan material Membangun Rumah Sederhana Batu bata, Semen, Pasir, Kerikil, Besi beton, Papan, Broti, Seng, Paku, Kusen, pintu dan jendela, Kunci, engsel, dan lainnya, Triplek plafon, Closet, Pintu kamar mandi, Cat minyak dan cat tembok, Instalasi pipa air, Instalasi listrik, Upah kerja tukang.', 'rumah1.jpg'),
+(1, 'Rumah Tinggal A', 'Rumah minimalis sederhana dengan tipe-36 dengan 2 kamar tidur yang akan dibangun memiliki ukuran panjang 6 meter, lebar 6 meter dan tinggi umumnya sekitar 4 meter. Rincian biaya dan material Membangun Rumah Sederhana Batu bata, Semen, Pasir, Kerikil, Besi beton, Papan, Broti, Seng, Paku, Kusen, pintu dan jendela, Kunci, engsel, dan lainnya, Triplek plafon, Closet, Pintu kamar mandi, Cat minyak dan cat tembok, Instalasi pipa air, Instalasi listrik, Upah kerja tukang.', '1532428702-beranda_selected.png'),
 (2, 'Rumah Tinggal B', 'Rumah minimalis sederhana dengan tipe-36 dengan 2 kamar tidur yang akan dibangun memiliki ukuran panjang 6 meter, lebar 6 meter dan tinggi umumnya sekitar 4 meter. Rincian biaya dan material Membangun Rumah Sederhana Batu bata, Semen, Pasir, Kerikil, Besi beton, Papan, Broti, Seng, Paku, Kusen, pintu dan jendela, Kunci, engsel, dan lainnya, Triplek plafon, Closet, Pintu kamar mandi, Cat minyak dan cat tembok, Instalasi pipa air, Instalasi listrik, Upah kerja tukang.', 'rumah2.jpg'),
-(3, 'Rumah Tinggal C', 'fasdasgdsfhasdfasddfasdf asdfasdfasdfasd', '1532044511-animals_cat_eyes_cats_greyscale_1366x768_104630.jpg');
+(3, 'Rumah Tinggal C', 'fasdasgdsfhasdfasddfasdf asdfasdfasdfasd\r\nasdfadsfa faksdfas\r\nasdfsdfasdf', '1532044511-animals_cat_eyes_cats_greyscale_1366x768_104630.jpg');
 
 --
 -- Triggers `desain`
@@ -73,6 +73,31 @@ CREATE TRIGGER `deletedesain` AFTER DELETE ON `desain` FOR EACH ROW begin
 	end
 $$
 DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `gambar`
+--
+
+CREATE TABLE `gambar` (
+  `id` int(11) NOT NULL,
+  `id_desain` int(11) NOT NULL,
+  `namaruangan` varchar(100) NOT NULL,
+  `gambar` text NOT NULL,
+  `deskripsi` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `gambar`
+--
+
+INSERT INTO `gambar` (`id`, `id_desain`, `namaruangan`, `gambar`, `deskripsi`) VALUES
+(1, 3, 'ruangan wc', 'Saitamas.png', 'Gambar ini adalah saitama'),
+(2, 3, 'ruangan kamar', 'R.png', 'Gambar gambaran'),
+(3, 3, 'ruang tamu', 'R.png', 'Gambar gambaran'),
+(4, 3, 'ruang makan', 'R.png', 'Gambar gambaran'),
+(5, 3, 'ruang nonton', 'Saitamas.png', 'Gambar gambaran');
 
 -- --------------------------------------------------------
 
@@ -149,6 +174,13 @@ ALTER TABLE `desain`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `gambar`
+--
+ALTER TABLE `gambar`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_iddesain` (`id_desain`);
+
+--
 -- Indexes for table `jenis_pekerjaan`
 --
 ALTER TABLE `jenis_pekerjaan`
@@ -180,20 +212,32 @@ ALTER TABLE `desain`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT for table `gambar`
+--
+ALTER TABLE `gambar`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
 -- AUTO_INCREMENT for table `jenis_pekerjaan`
 --
 ALTER TABLE `jenis_pekerjaan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `uraian_pekerjaan`
 --
 ALTER TABLE `uraian_pekerjaan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `gambar`
+--
+ALTER TABLE `gambar`
+  ADD CONSTRAINT `gambar_ibfk_1` FOREIGN KEY (`id_desain`) REFERENCES `desain` (`id`);
 
 --
 -- Constraints for table `uraian_pekerjaan`
