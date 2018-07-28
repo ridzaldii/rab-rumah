@@ -178,7 +178,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Harga Satuan</label>
-                                            <input type="number" name="hargasatuan" class="form-control input-default " placeholder="Harga Satuan">
+                                            <input type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 46" name="hargasatuan" class="form-control input-default " placeholder="Harga Satuan">
                                         </div>
                                         <button type='submit' name='submit' class='btn btn-success' value='Submit' style="float:right"/><i class='fa fa-check'></i> Submit</button>
                                     </form>

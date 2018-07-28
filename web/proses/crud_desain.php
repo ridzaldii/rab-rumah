@@ -34,7 +34,7 @@
 		if ($result) {
 			echo "<script>
 						alert('Berhasil dihapus');
-						window.location='".$link."/detaildesain.php?id=$hapus';
+						window.location='".$link."/index.php';
 						</script>";
 			$conn->query($set1);
 		}else{

@@ -135,7 +135,9 @@
                           while ($row_d = $result_d->fetch_assoc()) {
                             echo $row_d['namadesain'];
                           
-                     ?></h3> </div>
+                     ?>
+                     <a href="../proses/crud_desain.php?hapus=<?php echo $row_d['id'] ?>"><button id="hpsd" class="btn btn-info" style="margin-left:10px" title="Hapus Desain" onclick="return confirm('Yakin Ingin Menghapus Desain ini? Semua data-data didalam desain ini termasuk gambar desain dan uraian pekerjaan akan turut terhapus.')"><i class="fa fa-trash"></i></button></a>
+                 </h3> </div>
                 <div class="col-md-7 align-self-center">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="javascript:void(0)">Desain</a></li>
@@ -247,10 +249,10 @@
                                                                 echo "<td>".$rowjj['jenispekerjaan']."</td>";
                                                             } ?>
                                                         <td><?php echo $row['satuan'] ?></td>
-                                                        <td><?php echo $row['hargasatuan'] ?></td>
+                                                        <td><?php echo number_format($row['hargasatuan'],2) ?></td>
                                                         <td>
-                                                            <?php echo "<a href='edituraian.php?desain=".$row_d['namadesain']."&id=".$row['id']."&pekerjaan=".$row['pekerjaan']."&volume=".$row['volume']."&satuan=".$row['satuan']."&hargasatuan=".$row['hargasatuan']."&idd=$id_d&&idj=".$row['id_jenis']."'>" ?><button class="btn-sm btn-info">Edit</button></a>
-                                                            <a href="../proses/crud_uraian.php?hapus=<?php echo $row['id'] ?>&idd=<?php echo $id_d; ?>"><button onclick="return confirm('Hapus pekerjaan, <?php echo $row['pekerjaan']; ?>?');" class="btn-sm btn-danger">Hapus</button></a>
+                                                            <?php echo "<a href='edituraian.php?desain=".$row_d['namadesain']."&id=".$row['id']."&pekerjaan=".$row['pekerjaan']."&volume=".$row['volume']."&satuan=".$row['satuan']."&hargasatuan=".$row['hargasatuan']."&idd=".$_GET['id']."&&idj=".$row['id_jenis']."'>" ?><button class="btn-sm btn-info">Edit</button></a>
+                                                            <a href="../proses/crud_uraian.php?hapus=<?php echo $row['id'] ?>&idd=<?php echo $_GET['id']; ?>"><button onclick="return confirm('Hapus pekerjaan, <?php echo $row['pekerjaan']; ?>?');" class="btn-sm btn-danger">Hapus</button></a>
                                                         </td>
                                                     </tr>
                                                 <?php
@@ -402,6 +404,14 @@
         $("#imgInp").change(function(){
             readURL(this);
         });     
+
+        $("#hpsd").hover(function(){
+            $(this).removeClass("btn-info");
+            $(this).addClass("btn-danger");
+        },function(){
+            $(this).removeClass("btn-danger");
+            $(this).addClass("btn-info");
+        });
     });
     </script>
 </body>

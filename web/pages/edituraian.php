@@ -184,7 +184,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Harga Satuan</label>
-                                            <input type="number" name="hargasatuan" class="form-control input-default " placeholder="Harga Satuan" value="<?php echo $_GET['hargasatuan'] ?>">
+                                            <input type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 46" name="hargasatuan" class="form-control input-default " placeholder="Harga Satuan" value="<?php echo $_GET['hargasatuan'] ?>">
                                         </div>
                                         <button type='submit' name='update' class='btn btn-success' value='Submit' style="float:right"/><i class='fa fa-check'></i> Submit</button>
                                     </form>
