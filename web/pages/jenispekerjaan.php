@@ -166,7 +166,7 @@
                             <div class="card-body">
                                 <div class="basic-form">
                                     <form action="../proses/crud_jenis.php" method="post" enctype="multipart/form-data">
-                                        <div class="form-group">
+                                        <div id="inp" class="form-group">
                                             <input type="hidden" name="id" id="idUp">
                                             <input id="jenisUp" type="text" name="jenispekerjaan" class="form-control input-default" placeholder="Jenis Pekerjaan" disabled required>
                                         </div>
@@ -266,17 +266,21 @@
     <script src="../js/lib/datatables/datatables-init.js"></script>
     <script>
       function functionEdit(id,jns){
-        var submit, idup, jenis, h;
+        var submit, idup, jenis, h, inp;
         idup = document.getElementById('idUp');
         jenis = document.getElementById('jenisUp');
         submit = document.getElementById('btn_update');
         h = document.getElementById('title');
+        inp = document.getElementById('inp');
 
         jenis.disabled=false;
         submit.disabled=false;
         h.innerHTML = 'Update : '+jns;
         idup.value = id;
         jenis.value = jns;
+        jenis.focus();
+        inp.setAttribute("class","form-group has-success");
+        window.scrollTo(0,0);
       }
     </script>
 </body>

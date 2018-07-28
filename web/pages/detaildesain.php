@@ -249,7 +249,7 @@
                                                                 echo "<td>".$rowjj['jenispekerjaan']."</td>";
                                                             } ?>
                                                         <td><?php echo $row['satuan'] ?></td>
-                                                        <td><?php echo number_format($row['hargasatuan'],2) ?></td>
+                                                        <td>Rp. <?php echo number_format($row['hargasatuan'],2) ?></td>
                                                         <td>
                                                             <?php echo "<a href='edituraian.php?desain=".$row_d['namadesain']."&id=".$row['id']."&pekerjaan=".$row['pekerjaan']."&volume=".$row['volume']."&satuan=".$row['satuan']."&hargasatuan=".$row['hargasatuan']."&idd=".$_GET['id']."&&idj=".$row['id_jenis']."'>" ?><button class="btn-sm btn-info">Edit</button></a>
                                                             <a href="../proses/crud_uraian.php?hapus=<?php echo $row['id'] ?>&idd=<?php echo $_GET['id']; ?>"><button onclick="return confirm('Hapus pekerjaan, <?php echo $row['pekerjaan']; ?>?');" class="btn-sm btn-danger">Hapus</button></a>
