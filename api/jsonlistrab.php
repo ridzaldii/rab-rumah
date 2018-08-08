@@ -37,14 +37,17 @@ class JsonDisplayMarker {
                         $getData4->execute();
                         $result4 = $getData4->fetchAll(PDO::FETCH_ASSOC);
                         foreach ($result4 as $data4) {
+                            $tbiaya = $data4['biaya']*$data4['volume'];
                             array_push($response4,
                                 array(
                                     'id_sub'=>$data4['id'],
-                                    'keterangan'=>mb_convert_encoding($data4['keterangan'], 'UTF-8', 'UTF-8'),
+                                    'keterangan'=>$data4['keterangan'],
+                                    'satuan'=>$data4['satuan'],
                                     'volume'=>$data4['volume'],
-                                    'harga'=>$data4['harga'])
+                                    'biaya'=>$data4['biaya'],
+                                    'totalbiaya'=>$tbiaya."")
                             );
-                            $hrgs=$hrgs+$data4['harga'];
+                            $hrgs=$hrgs+$tbiaya;
                         }
                             $hrgs=$hrgs+(0.1*$hrgs);
                         array_push($response2,

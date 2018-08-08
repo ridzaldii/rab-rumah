@@ -6,10 +6,9 @@
 		$pekerjaan = $_POST['pekerjaan'];
 		$volume = $_POST['volume'];
 		$satuan = $_POST['satuan'];
-		$hargasatuan = $_POST['hargasatuan'];
 		$iddesain = $_POST['iddesain'];
 
-		$query 		= "INSERT INTO uraian_pekerjaan VALUES('', '$iddesain', '$pekerjaan', '$volume','$satuan','$hargasatuan','$idjenis')";
+		$query 		= "INSERT INTO uraian_pekerjaan VALUES('', '$iddesain', '$pekerjaan', '$volume','$satuan','$idjenis')";
 
 		$result 	= $conn->query($query);
 		if ($result) {
@@ -39,10 +38,9 @@
 		$pekerjaan = $_POST['pekerjaan'];
 		$volume = $_POST['volume'];
 		$satuan = $_POST['satuan'];
-		$hargasatuan = $_POST['hargasatuan'];
 		$iddesain = $_POST['iddesain'];
 
-		$query 		= "UPDATE uraian_pekerjaan SET pekerjaan='$pekerjaan', volume='$volume', satuan='$satuan', hargasatuan='$hargasatuan' WHERE id='$id'";
+		$query 		= "UPDATE uraian_pekerjaan SET pekerjaan='$pekerjaan', volume='$volume', satuan='$satuan' WHERE id='$id'";
 		$result 	= $conn->query($query);
 
 		if ($result) {
