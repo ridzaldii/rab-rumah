@@ -30,13 +30,30 @@ class JsonDisplayMarker {
                     $getData2->execute();
                     $result2 = $getData2->fetchAll(PDO::FETCH_ASSOC);
                     foreach ($result2 as $data2) {
+                        $response4 = array();
+                        $hrgs = 0;
+                        $queryMarker4 = "SELECT * FROM sub_pekerjaan WHERE id_uraian=".$data2['id'];
+                        $getData4 = $conn->prepare($queryMarker4);
+                        $getData4->execute();
+                        $result4 = $getData4->fetchAll(PDO::FETCH_ASSOC);
+                        foreach ($result4 as $data4) {
+                            array_push($response4,
+                                array(
+                                    'id_sub'=>$data4['id'],
+                                    'keterangan'=>$data4['keterangan'],
+                                    'volume'=>$data4['volume'],
+                                    'harga'=>$data4['harga'])
+                            );
+                            $hrgs=$hrgs+$data4['harga'];
+                        }
                         array_push($response2,
                             array(
                                 'id_uraian'=>$data2['id'],
                                 'pekerjaan'=>$data2['pekerjaan'],
                                 'volume'=>$data2['volume'],
                                 'satuan'=>$data2['satuan'],
-                                'hargasatuan'=>$data2['hargasatuan'])
+                                'sub'=>$response4,
+                                'hargasatuan'=>$hrgs."")
                         );
                     }
                     array_push($response1,
