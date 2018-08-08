@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 25, 2018 at 11:05 AM
+-- Generation Time: Aug 08, 2018 at 03:02 AM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 7.2.1
 
@@ -70,6 +70,7 @@ INSERT INTO `desain` (`id`, `namadesain`, `deskripsi`, `gambar`) VALUES
 DELIMITER $$
 CREATE TRIGGER `deletedesain` AFTER DELETE ON `desain` FOR EACH ROW begin
 		delete from uraian_pekerjaan where id_desain=old.id;
+        delete from gambar where id_desain=old.id;
 	end
 $$
 DELIMITER ;
@@ -131,6 +132,38 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `sub_pekerjaan`
+--
+
+CREATE TABLE `sub_pekerjaan` (
+  `id` int(11) NOT NULL,
+  `id_uraian` int(11) NOT NULL,
+  `keterangan` text NOT NULL,
+  `volume` float(10,3) NOT NULL,
+  `harga` float(10,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `sub_pekerjaan`
+--
+
+INSERT INTO `sub_pekerjaan` (`id`, `id_uraian`, `keterangan`, `volume`, `harga`) VALUES
+(1, 10, 'Kayu balok 5/7', 0.012, 20064.00),
+(2, 11, 'Pekerja', 0.100, 9600.00),
+(3, 10, 'Kayu papan 3/20', 0.007, 20482.00),
+(4, 1, 'Kayu balok 5/7', 0.012, 20064.00),
+(5, 1, 'Paku 2\"-3\"', 0.020, 418.00),
+(6, 1, 'Kayu papan 3/20', 0.007, 20482.00),
+(7, 1, 'Pekerja', 0.100, 9600.00),
+(8, 1, 'Tukang kayu', 0.100, 12000.00),
+(9, 1, 'Kepala tukang kayu', 0.010, 1300.00),
+(10, 1, 'Mandor', 0.005, 750.00),
+(11, 2, 'Pekerja', 0.100, 9600.00),
+(12, 2, 'Mandor', 0.050, 7500.00);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `uraian_pekerjaan`
 --
 
@@ -140,7 +173,6 @@ CREATE TABLE `uraian_pekerjaan` (
   `pekerjaan` varchar(50) NOT NULL,
   `volume` float(10,2) NOT NULL,
   `satuan` varchar(8) NOT NULL,
-  `hargasatuan` double NOT NULL,
   `id_jenis` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -148,14 +180,16 @@ CREATE TABLE `uraian_pekerjaan` (
 -- Dumping data for table `uraian_pekerjaan`
 --
 
-INSERT INTO `uraian_pekerjaan` (`id`, `id_desain`, `pekerjaan`, `volume`, `satuan`, `hargasatuan`, `id_jenis`) VALUES
-(1, 1, 'Pek. Pengukuran & Pas. Bouwplank', 41.00, 'm1', 710754, 1),
-(2, 1, 'Pek. Pembersihan Lokasi', 84.00, 'm2', 18810, 1),
-(3, 1, 'Pek. Galian Tanah', 36.00, 'm3', 83325, 1),
-(4, 1, 'Pek. Pembersihan Lokasi', 42.00, 'm2', 71075, 2),
-(5, 2, 'Pek. Pembersihan Lokasi', 41.00, 'm2', 71075, 2),
-(6, 1, 'Pek. Galian', 12.00, 'm3', 20000, 2),
-(10, 3, 'Pek. Galian', 24.00, 'm3', 23000, 1);
+INSERT INTO `uraian_pekerjaan` (`id`, `id_desain`, `pekerjaan`, `volume`, `satuan`, `id_jenis`) VALUES
+(1, 1, 'Pek. Pengukuran & Pas. Bouwplank', 41.00, 'm1', 1),
+(2, 1, 'Pek. Pembersihan Lokasi', 84.00, 'm2', 1),
+(3, 1, 'Pek. Galian Tanah', 36.00, 'm3', 1),
+(4, 1, 'Pek. Pembersihan Lokasi', 42.00, 'm2', 2),
+(5, 2, 'Pek. Pembersihan Lokasi', 41.00, 'm2', 2),
+(6, 1, 'Pek. Galian', 12.00, 'm3', 2),
+(10, 3, 'Pek. Galian', 24.00, 'm3', 1),
+(11, 3, 'Pek. Cor', 12.00, 'm3', 1),
+(12, 2, 'Pek. Cor', 24.00, 'm', 1);
 
 --
 -- Indexes for dumped tables
@@ -187,6 +221,13 @@ ALTER TABLE `jenis_pekerjaan`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `sub_pekerjaan`
+--
+ALTER TABLE `sub_pekerjaan`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_iduraian` (`id_uraian`);
+
+--
 -- Indexes for table `uraian_pekerjaan`
 --
 ALTER TABLE `uraian_pekerjaan`
@@ -215,7 +256,7 @@ ALTER TABLE `desain`
 -- AUTO_INCREMENT for table `gambar`
 --
 ALTER TABLE `gambar`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `jenis_pekerjaan`
@@ -224,10 +265,16 @@ ALTER TABLE `jenis_pekerjaan`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT for table `sub_pekerjaan`
+--
+ALTER TABLE `sub_pekerjaan`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
 -- AUTO_INCREMENT for table `uraian_pekerjaan`
 --
 ALTER TABLE `uraian_pekerjaan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Constraints for dumped tables
@@ -238,6 +285,12 @@ ALTER TABLE `uraian_pekerjaan`
 --
 ALTER TABLE `gambar`
   ADD CONSTRAINT `gambar_ibfk_1` FOREIGN KEY (`id_desain`) REFERENCES `desain` (`id`);
+
+--
+-- Constraints for table `sub_pekerjaan`
+--
+ALTER TABLE `sub_pekerjaan`
+  ADD CONSTRAINT `sub_pekerjaan_ibfk_1` FOREIGN KEY (`id_uraian`) REFERENCES `uraian_pekerjaan` (`id`);
 
 --
 -- Constraints for table `uraian_pekerjaan`
