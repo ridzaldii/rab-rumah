@@ -40,12 +40,13 @@ class JsonDisplayMarker {
                             array_push($response4,
                                 array(
                                     'id_sub'=>$data4['id'],
-                                    'keterangan'=>$data4['keterangan'],
+                                    'keterangan'=>mb_convert_encoding($data4['keterangan'], 'UTF-8', 'UTF-8'),
                                     'volume'=>$data4['volume'],
                                     'harga'=>$data4['harga'])
                             );
                             $hrgs=$hrgs+$data4['harga'];
                         }
+                            $hrgs=$hrgs+(0.1*$hrgs);
                         array_push($response2,
                             array(
                                 'id_uraian'=>$data2['id'],
